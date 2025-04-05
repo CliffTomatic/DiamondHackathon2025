@@ -6,7 +6,7 @@ export default function HomePage() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-slate-50 dark:bg-slate-800">
       <h1 className="text-4xl font-bold text-primary dark:text-green-500">
-        Welcome to ImpulseGuard
+        Welcome to BudgetGuard
       </h1>
       <p className="mt-4 text-secondary dark:text-orange-300">
         Your smart budgeting companion.
