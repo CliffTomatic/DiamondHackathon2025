@@ -6,9 +6,19 @@
 </head>
 <body>
 <div class="container">
-    <h1>Hello, Chrome!</h1>
-    <button id="changeColor">Change Page Color</button>
+    <h1>Budget Guardian</h1>
+    <button id="homepage" class="open-website">Home Page</button>
+    <p id="spending-summary">Spending Summary: <span id="spending-amount">0</span></p>
+    <!-- Add this to your HTML -->
+    <div class="input-section">
+        <h3 id="add-new-purchase">Add New Purchase</h3>
+        <input type="text" id="product-name" placeholder="Product name">
+        <input type="number" id="product-price" placeholder="Price" step="0.01">
+        <input type="number" id="product-quantity" placeholder="Quantity" value="1">
+        <button id="submit-purchase">Add Purchase</button>
+    </div>
 </div>
+
 <script src="popup.js"></script>
 </body>
 </html>

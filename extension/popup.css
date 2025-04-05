@@ -1,11 +1,27 @@
 body {
     width: 200px;
     padding: 20px;
+    border-radius: 10px;
     font-family: Arial, sans-serif;
+    background-color: #1e293b
+}
+
+h1, h2, h3{
+    color: white;
+}
+#spending-summary {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 10px;
+    text-align: left;
+    color: white;
 }
 
 .container {
     text-align: center;
+    border-radius: 10px;
 }
 
 button {
@@ -13,6 +29,30 @@ button {
     color: white;
     border: none;
     padding: 10px 20px;
+    margin-bottom: 30px;
     cursor: pointer;
     border-radius: 5px;
+}
+
+/* Add these styles */
+.input-section {
+    /*margin: 15px 0;*/
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+#submit-purchase {
+    background: #2196F3;
+    margin-top: 10px;
+}
+#add-new-purchase {
+    margin-top: 0px;
 }

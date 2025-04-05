@@ -1,10 +1,22 @@
 {
   "manifest_version": 3,
-  "name": "My Icon-Free Extension",
+  "name": "Budget Guardian",
   "version": "1.0",
-  "description": "A Chrome extension without icons",
+  "description": "Smart spending tracker with website integration",
   "action": {
     "default_popup": "popup.html"
   },
-  "permissions": ["activeTab", "storage"]
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
+    "http://localhost:3000/*",
+    "http://127.0.0.1:3000/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
 }
