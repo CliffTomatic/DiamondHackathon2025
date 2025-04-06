@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "/dashboard/page": "app/dashboard/page.js",
-=======
   "/_not-found/page": "app/_not-found/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
->>>>>>> 09addd1 (Before adding add to cart features)
+  "/dashboard/page": "app/dashboard/page.js",
   "/page": "app/page.js"
 }

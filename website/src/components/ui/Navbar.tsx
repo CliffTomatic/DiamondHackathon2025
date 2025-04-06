@@ -39,14 +39,6 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link
-              href="/profile"
-              className="text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white"
-            >
-              Profile
-            </Link>
-          </li>
-          <li>
             <button
               onClick={toggleTheme}
               className="bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white px-3 py-1 rounded"

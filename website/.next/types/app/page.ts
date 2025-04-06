@@ -1,4 +1,4 @@
-// File: /home/cliff/WebstormProjects/DiamondHackathon2025/website/src/app/page.tsx
+// File: /Users/sed/Documents/GitHub/DiamondHackathon2025/website/src/app/page.tsx
 import * as entry from '../../../src/app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
