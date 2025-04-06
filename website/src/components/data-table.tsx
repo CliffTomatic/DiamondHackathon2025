@@ -429,10 +429,6 @@ export function DataTable({
         </Select>
         <div className="flex items-center gap-2">
           {/* Add a Save All button */}
-          <Button variant="outline" size="sm" onClick={saveAllData}>
-            <IconPlus className="mr-2 size-4" />
-            Save All to data.json
-          </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">

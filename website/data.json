@@ -3,8 +3,16 @@
     "id": 1,
     "name": "Headphones",
     "status": "Removed",
-    "quantity": "19",
+    "quantity": "10",
     "cost": "$18",
+    "source": "amazon"
+  },
+  {
+    "id": 2,
+    "name": "Bose QuietComfort Bluetooth Headphones, Wireles...",
+    "status": "Purchased",
+    "quantity": "1",
+    "cost": "$299",
     "source": "amazon"
   }
 ]
