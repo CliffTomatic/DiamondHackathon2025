@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "name": "Headphones",
+    "status": "Removed",
+    "quantity": "19",
+    "cost": "$18",
+    "source": "amazon"
+  }
+]

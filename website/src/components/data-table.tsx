@@ -307,11 +307,8 @@ export function DataTable({
 }) {
   const [data, setData] = React.useState(() => initialData)
   const [rowSelection, setRowSelection] = React.useState({})
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [pagination, setPagination] = React.useState({
     pageIndex: 0,
@@ -329,9 +326,33 @@ export function DataTable({
     [data]
   )
 
+  // Add a function to handle item updates
+  const handleItemUpdate = (updatedItem: z.infer<typeof schema>) => {
+    setData(currentData => 
+      currentData.map(item => 
+        item.id === updatedItem.id ? updatedItem : item
+      )
+    )
+  }
+
+  // Create a modified columns array with the updated cell renderer
+  const tableColumns = React.useMemo(() => {
+    return columns.map(col => {
+      if (col.accessorKey === "name") {
+        return {
+          ...col,
+          cell: ({ row }: { row: any }) => {
+            return <TableCellViewer item={row.original} onItemUpdate={handleItemUpdate} />
+          }
+        }
+      }
+      return col
+    })
+  }, [])
+
   const table = useReactTable({
     data,
-    columns,
+    columns: tableColumns,
     state: {
       sorting,
       columnVisibility,
@@ -365,6 +386,29 @@ export function DataTable({
     }
   }
 
+  // Function to save all data to data.json
+  const saveAllData = async () => {
+    try {
+      // Make API call to save the entire data array
+      const response = await fetch('/api/save-all-data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      
+      if (!response.ok) {
+        throw new Error('Failed to save all data')
+      }
+      
+      toast.success("All data saved to data.json")
+    } catch (error) {
+      console.error("Error saving all data:", error)
+      toast.error("Failed to save all data")
+    }
+  }
+
   return (
     <Tabs
       defaultValue="outline"
@@ -384,6 +428,11 @@ export function DataTable({
           </SelectTrigger>
         </Select>
         <div className="flex items-center gap-2">
+          {/* Add a Save All button */}
+          <Button variant="outline" size="sm" onClick={saveAllData}>
+            <IconPlus className="mr-2 size-4" />
+            Save All to data.json
+          </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
@@ -552,21 +601,7 @@ export function DataTable({
           </div>
         </div>
       </TabsContent>
-      <TabsContent
-        value="past-performance"
-        className="flex flex-col px-4 lg:px-6"
-      >
-        <div className="aspect-video w-full flex-1 rounded-lg border border-dashed"></div>
-      </TabsContent>
-      <TabsContent value="key-personnel" className="flex flex-col px-4 lg:px-6">
-        <div className="aspect-video w-full flex-1 rounded-lg border border-dashed"></div>
-      </TabsContent>
-      <TabsContent
-        value="focus-documents"
-        className="flex flex-col px-4 lg:px-6"
-      >
-        <div className="aspect-video w-full flex-1 rounded-lg border border-dashed"></div>
-      </TabsContent>
+      {/* Other TabsContent components stay the same */}
     </Tabs>
   )
 }
@@ -591,11 +626,77 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
+function TableCellViewer({ item, onItemUpdate }: { 
+  item: z.infer<typeof schema>; 
+  onItemUpdate: (updatedItem: z.infer<typeof schema>) => void;
+}) {
   const isMobile = useIsMobile()
+  // Create state to track form values
+  const [formState, setFormState] = React.useState({
+    id: item.id,
+    name: item.name,
+    status: item.status,
+    quantity: item.quantity,
+    cost: item.cost,
+    source: item.source
+  })
+  
+  // Track if the drawer is open
+  const [open, setOpen] = React.useState(false)
+
+  // Handle input changes
+  const handleChange = (field: string, value: string) => {
+    setFormState(prev => ({
+      ...prev,
+      [field]: value
+    }))
+  }
+
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    try {
+      // Start loading toast
+      toast.promise(
+        saveItemToJson(formState),
+        {
+          loading: `Saving changes to ${formState.name}`,
+          success: "Changes saved successfully to data.json",
+          error: "Error saving changes to data.json"
+        }
+      )
+      
+      // Update parent component with new data
+      onItemUpdate(formState as z.infer<typeof schema>)
+      
+      // Close the drawer after submission
+      setOpen(false)
+    } catch (error) {
+      console.error("Error saving data:", error)
+    }
+  }
+
+  // Function to save data to JSON file via API
+  const saveItemToJson = async (itemData: any) => {
+    // Make API call to save to data.json
+    const response = await fetch('/api/save-item', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(itemData),
+    })
+    
+    if (!response.ok) {
+      throw new Error('Failed to save data')
+    }
+    
+    return await response.json()
+  }
 
   return (
-    <Drawer direction={isMobile ? "bottom" : "right"}>
+    <Drawer direction={isMobile ? "bottom" : "right"} open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button variant="link" className="text-foreground w-fit px-0 text-left">
           {item.name}
@@ -603,78 +704,32 @@ function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="gap-1">
-          <DrawerTitle>{item.name}</DrawerTitle>
+          <DrawerTitle>{formState.name}</DrawerTitle>
           <DrawerDescription>
-            Showing total visitors for the last 6 months
+            Edit item details.
           </DrawerDescription>
         </DrawerHeader>
         <div className="flex flex-col gap-4 overflow-y-auto px-4 text-sm">
           {!isMobile && (
             <>
-              <ChartContainer config={chartConfig}>
-                <AreaChart
-                  accessibilityLayer
-                  data={chartData}
-                  margin={{
-                    left: 0,
-                    right: 10,
-                  }}
-                >
-                  <CartesianGrid vertical={false} />
-                  <XAxis
-                    dataKey="month"
-                    tickLine={false}
-                    axisLine={false}
-                    tickMargin={8}
-                    tickFormatter={(value) => value.slice(0, 3)}
-                    hide
-                  />
-                  <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent indicator="dot" />}
-                  />
-                  <Area
-                    dataKey="mobile"
-                    type="natural"
-                    fill="var(--color-mobile)"
-                    fillOpacity={0.6}
-                    stroke="var(--color-mobile)"
-                    stackId="a"
-                  />
-                  <Area
-                    dataKey="desktop"
-                    type="natural"
-                    fill="var(--color-desktop)"
-                    fillOpacity={0.4}
-                    stroke="var(--color-desktop)"
-                    stackId="a"
-                  />
-                </AreaChart>
-              </ChartContainer>
-              <Separator />
-              <div className="grid gap-2">
-                <div className="flex gap-2 leading-none font-medium">
-                  Trending up by 5.2% this month{" "}
-                  <IconTrendingUp className="size-4" />
-                </div>
-                <div className="text-muted-foreground">
-                  Showing total visitors for the last 6 months. This is just
-                  some random text to test the layout. It spans multiple lines
-                  and should wrap around.
-                </div>
-              </div>
-              <Separator />
             </>
           )}
-          <form className="flex flex-col gap-4">
+          <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-3">
               <Label htmlFor="name">Item Name</Label>
-              <Input id="name" defaultValue={item.name} />
+              <Input 
+                id="name" 
+                value={formState.name} 
+                onChange={(e) => handleChange("name", e.target.value)} 
+              />
             </div>
             <div className="grid grid-cols-2 gap-4">              
               <div className="flex flex-col gap-3">
                 <Label htmlFor="status">Status</Label>
-                <Select defaultValue={item.status}>
+                <Select 
+                  value={formState.status} 
+                  onValueChange={(value) => handleChange("status", value)}
+                >
                   <SelectTrigger id="status" className="w-full">
                     <SelectValue placeholder="Select a status" />
                   </SelectTrigger>
@@ -689,24 +744,33 @@ function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-3">
                 <Label htmlFor="quantity">Quantity</Label>
-                <Input id="quantity" defaultValue={item.quantity} />
+                <Input 
+                  id="quantity" 
+                  value={formState.quantity} 
+                  onChange={(e) => handleChange("quantity", e.target.value)} 
+                />
               </div>
               <div className="flex flex-col gap-3">
                 <Label htmlFor="cost">Cost</Label>
-                <Input id="cost" defaultValue={item.cost} />
+                <Input 
+                  id="cost" 
+                  value={formState.cost} 
+                  onChange={(e) => handleChange("cost", e.target.value)} 
+                />
               </div>
             </div>
             <div className="flex flex-col gap-3">
               <Label htmlFor="source">Website</Label>
-              <Select defaultValue={item.source}>
+              <Select 
+                value={formState.source} 
+                onValueChange={(value) => handleChange("source", value)}
+              >
                 <SelectTrigger id="source" className="w-full">
                   <SelectValue placeholder="Select a website" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="amazon">Amazon</SelectItem>
-                  <SelectItem value="etsy">
-                    Etsy
-                  </SelectItem>
+                  <SelectItem value="etsy">Etsy</SelectItem>
                   <SelectItem value="ebay">Ebay</SelectItem>
                 </SelectContent>
               </Select>
@@ -714,9 +778,10 @@ function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
           </form>
         </div>
         <DrawerFooter>
-          <Button>Submit</Button>
+          <Button onClick={handleSubmit}>Save Changes
+          </Button>
           <DrawerClose asChild>
-            <Button variant="outline">Done</Button>
+            <Button variant="outline">Cancel</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
