@@ -1,12 +1,32 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
+    <meta charset="UTF-8">
     <title>Moneta</title>
     <link rel="stylesheet" href="popup.css">
+    <style>
+        /* Optional inline styling for clarity */
+        .container { padding: 10px; }
+        .summary-section, .cart-section, .purchased-section, .input-section {
+            margin-bottom: 15px; padding: 10px;
+            border: 1px solid #334155; border-radius: 8px;
+        }
+        .cart-item, .purchased-item {
+            margin-bottom: 8px; padding: 5px;
+            border: 1px solid #94a3b8; border-radius: 4px;
+        }
+        .cart-item-header, .purchased-item-header {
+            display: flex; justify-content: space-between; font-weight: bold;
+        }
+        .cart-item-details, .purchased-item-details {
+            display: flex; justify-content: space-between; font-size: 0.9em;
+        }
+        button { cursor: pointer; }
+    </style>
 </head>
 <body>
 <div class="container">
-    <header>
+    <header class="main-header">
         <h1>Moneta</h1>
         <button id="homepage" class="open-website">Home Page</button>
     </header>
@@ -16,12 +36,11 @@
         <section class="summary-section">
             <p id="weekly-limit">
                 Weekly Limit:
-                <span id="weekly-amount" contenteditable="true">0.00</span>
+                <span id="weekly-amount" contenteditable="true">$0.00</span>
             </p>
             <p id="spending-summary">
                 Your Budget: <span id="spending-amount">$0.00</span>
             </p>
-
             <p id="cart-summary">
                 Cart Total: <span id="cart-total">$0.00</span>
             </p>
@@ -31,7 +50,15 @@
         <section class="cart-section">
             <h3>Shopping Cart Items</h3>
             <div id="cart-items" class="cart-list">
-                <!-- Cart items will be injected here -->
+                <!-- Cart items are dynamically loaded here -->
+            </div>
+        </section>
+
+        <!-- Purchased Items Section -->
+        <section class="purchased-section">
+            <h3>Purchased Items</h3>
+            <div id="purchased-items" class="purchased-list">
+                <!-- Purchased items are dynamically loaded here -->
             </div>
         </section>
 
@@ -39,19 +66,22 @@
         <section class="input-section">
             <h3>Manually Add New Purchase</h3>
             <input type="text" id="product-name" placeholder="Product name">
-            <input type="number" id="product-price" placeholder="Price" step="0.01">
-            <input type="number" id="product-quantity" placeholder="Quantity" value="1">
+            <div id="manual-purchase">
+                <input type="number" id="product-price" placeholder="Price" step="0.01">
+                <input type="number" id="product-quantity" placeholder="Quantity" value="1">
+            </div>
             <button id="submit-purchase">Add Purchase</button>
+            <!-- Global Fake Purchase button -->
+            <button id="fake-purchase-all" style="margin-top:10px;">
+                Fake Purchase All Items
+            </button>
         </section>
 
         <!-- Notes Section -->
         <section class="input-section">
             <h3>Notes</h3>
-            <span
-                    id="user-notes"
-                    contenteditable="true"
-                    style="display: inline-block; width: 100%; min-height: 50px; background: rgba(255,255,255,0.1); padding: 8px; border-radius: 6px;"
-            ></span>
+            <span id="user-notes" contenteditable="true" style="display: inline-block; width: 100%; min-height: 50px; background: rgba(255,255,255,0.1); padding: 8px; border-radius: 6px;">
+            </span>
         </section>
     </main>
 </div>

@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Moneta",
   "version": "1.0",
-  "description": "Smart spending tracker with website integration",
+  "description": "Smart spending tracker with Amazon integration",
   "action": {
     "default_popup": "popup.html"
   },
@@ -14,14 +14,19 @@
   ],
   "host_permissions": [
     "http://localhost:3000/*",
-    "http://127.0.0.1:3000/*"
+    "http://127.0.0.1:3000/*",
+    "http://localhost:3001/*",
+    "http://127.0.0.1:3001/*"
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
   },
   "content_scripts": [
     {
-      "matches": ["*://*.amazon.com/*", "*://*.ebay.com/*"],
+      "matches": ["*://*.amazon.com/*"],
       "js": ["content-script.js"],
       "run_at": "document_end"
     }
