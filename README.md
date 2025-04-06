@@ -1,6 +1,6 @@
-# 🛡️ BudgetGuard - Your Impulse Spending Shield
+# 🛡️ Moneta - Your Impulse Spending Shield
 
-**BudgetGuard** is a browser extension that helps you stay on track with your savings goals. Set a weekly or monthly savings plan, and BudgetGuard will alert you when you're about to overspend — especially on impulse purchases like those sneaky Amazon cart items 👀.
+**Moneta** is a browser extension that helps you stay on track with your savings goals. Set a weekly or monthly savings plan, and BudgetGuard will alert you when you're about to overspend — especially on impulse purchases like those sneaky Amazon cart items 👀.
 
 ---
 
