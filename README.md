@@ -12,14 +12,15 @@
 - 📊 Tracks your spending trends over time (coming soon!)
 
 ---
-👥 Team & Contributions
+## 👥 Team & Contributions
+
 Name	Role(s)
 - Clifford Durbin:	Browser Extension logic, content scripts, backend
 - Sahith Edula:	Website development, frontend & backend integration
 - Andy Yoo:	UI/UX design, styling, and project management
 
 ---
-🧰 Tech Stack
+##🧰 Tech Stack
 
 Languages & Tools Used:
 - JavaScript – 68.7%
