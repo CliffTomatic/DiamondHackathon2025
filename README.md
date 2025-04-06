@@ -14,22 +14,22 @@
 ---
 👥 Team & Contributions
 Name	Role(s)
-Clifford Durbin:	Browser Extension logic, content scripts, backend
-Sahith Edula:	Website development, frontend & backend integration
-Andy Yoo:	UI/UX design, styling, and project management
+- Clifford Durbin:	Browser Extension logic, content scripts, backend
+- Sahith Edula:	Website development, frontend & backend integration
+- Andy Yoo:	UI/UX design, styling, and project management
 
 ---
 🧰 Tech Stack
 - Languages & Tools Used:
-JavaScript – 68.7%
-TypeScript – 16%
-CSS – 14.9%
-HTML – 0.4%
+- JavaScript – 68.7%
+- TypeScript – 16%
+- CSS – 14.9%
+- HTML – 0.4%
 
 - Frameworks & Libraries:
-Next.js
-shadcn/ui
-React
+- Next.js
+- shadcn/ui
+- React
 
 ## 🖥️ Demo
 
