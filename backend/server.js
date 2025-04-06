@@ -7,26 +7,33 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-    .then(() => console.log('Connected to MongoDB'))
-    .catch(err => console.error('MongoDB connection error:', err));
-
-// Data Model
+// ------------------
+//  SCHEMA & MODEL
+// ------------------
 const budgetSchema = new mongoose.Schema({
     userId: { type: String, required: true, unique: true },
     allocatedBudget: { type: Number, default: 0 },
     weeklyLimit: { type: Number, default: 0 },
     cartTotal: { type: Number, default: 0 },
+    // Items still in the cart (not purchased)
     cartItems: [{
         name: String,
         price: Number,
         quantity: Number,
         source: String,
-        lineTotal: Number
+        lineTotal: Number,
+        addedToCartAt: { type: Date },
+        purchasedAt: { type: Date, default: null }
+    }],
+    // Items that have been purchased
+    purchased: [{
+        name: String,
+        price: Number,
+        quantity: Number,
+        source: String,
+        lineTotal: Number,
+        addedToCartAt: { type: Date },
+        purchasedAt: { type: Date }
     }],
     notes: { type: String, default: '' },
     createdAt: { type: Date, default: Date.now },
@@ -35,7 +42,9 @@ const budgetSchema = new mongoose.Schema({
 
 const Budget = mongoose.model('Budget', budgetSchema);
 
-// API Routes
+// ------------------
+//   UPDATE API
+// ------------------
 app.put('/api/user/update', async (req, res) => {
     try {
         const {
@@ -44,6 +53,7 @@ app.put('/api/user/update', async (req, res) => {
             weeklyLimit,
             cartTotal,
             cartItems,
+            purchased,
             notes
         } = req.body;
 
@@ -51,11 +61,32 @@ app.put('/api/user/update', async (req, res) => {
             return res.status(400).json({ error: 'userId is required' });
         }
 
+        // Normalize cartItems
+        const normalizedCartItems = (Array.isArray(cartItems) ? cartItems : []).map(item => {
+            const now = new Date();
+            return {
+                ...item,
+                addedToCartAt: item.addedToCartAt ? new Date(item.addedToCartAt) : now,
+                purchasedAt: item.purchasedAt ? new Date(item.purchasedAt) : null
+            };
+        });
+
+        // Normalize purchased items
+        const normalizedPurchased = (Array.isArray(purchased) ? purchased : []).map(item => {
+            const now = new Date();
+            return {
+                ...item,
+                addedToCartAt: item.addedToCartAt ? new Date(item.addedToCartAt) : now,
+                purchasedAt: item.purchasedAt ? new Date(item.purchasedAt) : now
+            };
+        });
+
         const updateData = {
             allocatedBudget: Number(allocatedBudget) || 0,
             weeklyLimit: Number(weeklyLimit) || 0,
             cartTotal: Number(cartTotal) || 0,
-            cartItems: Array.isArray(cartItems) ? cartItems : [],
+            cartItems: normalizedCartItems,
+            purchased: normalizedPurchased,
             notes: notes || '',
             updatedAt: new Date()
         };
@@ -66,16 +97,19 @@ app.put('/api/user/update', async (req, res) => {
             { upsert: true, new: true, runValidators: true }
         );
 
-        res.json(result);
+        return res.json(result);
     } catch (error) {
         console.error('Update error:', error);
-        res.status(500).json({
+        return res.status(500).json({
             error: 'Server error while updating data',
             details: error.message
         });
     }
 });
 
+// ------------------
+//    GET API
+// ------------------
 app.get('/api/user/:userId', async (req, res) => {
     try {
         const data = await Budget.findOne({ userId: req.params.userId });
@@ -86,19 +120,30 @@ app.get('/api/user/:userId', async (req, res) => {
                 weeklyLimit: 0,
                 cartTotal: 0,
                 cartItems: [],
+                purchased: [],
                 notes: ''
             });
         }
-
-        res.json(data);
+        return res.json(data);
     } catch (error) {
         console.error('Load error:', error);
-        res.status(500).json({
+        return res.status(500).json({
             error: 'Server error while loading data',
             details: error.message
         });
     }
 });
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
+// ------------------
+//    MONGODB INIT
+// ------------------
+mongoose.connect(process.env.MONGODB_URI)
+    .then(() => {
+        console.log('Connected to MongoDB');
+        const PORT = process.env.PORT || 3001;
+        app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
+    })
+    .catch(err => {
+        console.error('MongoDB connection error:', err);
+        process.exit(1);
+    });
