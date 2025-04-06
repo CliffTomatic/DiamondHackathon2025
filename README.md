@@ -12,6 +12,7 @@
 - 📊 Tracks your spending trends over time (coming soon!)
 
 ---
+
 ## 👥 Team & Contributions
 
 Name	Role(s)
@@ -20,6 +21,7 @@ Name	Role(s)
 - Andy Yoo:	UI/UX design, styling, and project management
 
 ---
+
 ##🧰 Tech Stack
 
 Languages & Tools Used:
