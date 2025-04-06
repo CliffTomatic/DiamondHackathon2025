@@ -20,13 +20,14 @@ Name	Role(s)
 
 ---
 🧰 Tech Stack
-- Languages & Tools Used:
+
+Languages & Tools Used:
 - JavaScript – 68.7%
 - TypeScript – 16%
 - CSS – 14.9%
 - HTML – 0.4%
 
-- Frameworks & Libraries:
+Frameworks & Libraries:
 - Next.js
 - shadcn/ui
 - React
