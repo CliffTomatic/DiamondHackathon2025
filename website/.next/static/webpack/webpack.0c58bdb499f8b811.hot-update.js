@@ -11,7 +11,11 @@ self["webpackHotUpdate_N_E"]("webpack",{},
 /******/ function(__webpack_require__) { // webpackRuntimeModules
 /******/ /* webpack/runtime/getFullHash */
 /******/ (() => {
+<<<<<<<< HEAD:website/.next/static/webpack/webpack.0c58bdb499f8b811.hot-update.js
 /******/ 	__webpack_require__.h = () => ("d6367937c3f0617a")
+========
+/******/ 	__webpack_require__.h = () => ("2dfe76654d4bd984")
+>>>>>>>> 09addd1 (Before adding add to cart features):website/.next/static/webpack/webpack.39f4224b8a7006b9.hot-update.js
 /******/ })();
 /******/ 
 /******/ }

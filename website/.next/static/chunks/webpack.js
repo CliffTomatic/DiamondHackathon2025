@@ -190,7 +190,11 @@
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
+<<<<<<< HEAD
 /******/ 		__webpack_require__.h = () => ("0b8079e223181724")
+=======
+/******/ 		__webpack_require__.h = () => ("2dfe76654d4bd984")
+>>>>>>> 09addd1 (Before adding add to cart features)
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
