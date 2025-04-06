@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Budget Guardian",
+  "name": "Moneta",
   "version": "1.0",
   "description": "Smart spending tracker with website integration",
   "action": {

@@ -22,7 +22,7 @@ export default function Navbar() {
       <div className="container mx-auto flex items-center justify-between">
         {/* Brand */}
         <div className="text-slate-800 dark:text-green-500 text-3xl font-bold font-sans">
-          <Link href="/">Budget Guardian</Link>
+          <Link href="/">Moneta</Link>
         </div>
 
         {/* Navigation Links and Dark Mode Toggle */}

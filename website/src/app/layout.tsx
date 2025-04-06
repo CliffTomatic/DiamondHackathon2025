@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Budget Guardian",
+  title: "Moneta",
   description: "A smart budgeting companion"
 };
 
