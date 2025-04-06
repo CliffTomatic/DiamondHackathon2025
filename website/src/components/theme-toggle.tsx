@@ -28,7 +28,7 @@ export function ThemeToggle() {
       <Button
         variant="ghost"
         onClick={toggleTheme}
-        className="relative flex items-center space-x-2"
+        className="relative flex items-center space-x-2 rounded-md p-2 text-sm font-medium text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 focus:ring-offset-slate-50 dark:focus:ring-offset-slate-950"
       >
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
@@ -42,7 +42,7 @@ export function ThemeToggle() {
             {theme === "dark" ? (
               <Sun className="h-5 w-5 text-yellow-400" />
             ) : (
-              <Moon className="h-5 w-5 text-gray-700" />
+              <Moon className="h-5 w-5 text-slate-800" />
             )}
           </motion.div>
         </AnimatePresence>
@@ -55,7 +55,7 @@ export function ThemeToggle() {
 
       {showTooltip && (
         <motion.div
-          className="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded shadow z-10"
+          className="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-slate-950 text-white dark:bg-slate-50 dark:text-slate-950 text-xs px-2 py-1 rounded shadow z-10"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}

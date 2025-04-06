@@ -1,0 +1,77 @@
+{
+    "_id": {
+      "$oid": "67f1ff62041b1cf56df81be8"
+    },
+    "userId": "chrome-extension-user",
+    "__v": {
+      "$numberInt": "0"
+    },
+    "allocatedBudget": {
+      "$numberInt": "0"
+    },
+    "cartItems": [
+      {
+        "name": "Avantree Relay - Premium Airplane Bluetooth 5.3...",
+        "price": {
+          "$numberDouble": "39.99"
+        },
+        "quantity": {
+          "$numberInt": "1"
+        },
+        "source": "amazon",
+        "lineTotal": {
+          "$numberDouble": "39.99"
+        },
+        "addedToCartAt": {
+          "$date": {
+            "$numberLong": "1743956504512"
+          }
+        },
+        "purchasedAt": {
+          "$date": {
+            "$numberLong": "1743956506650"
+          }
+        },
+        "_id": {
+          "$oid": "67f299d3691cfe1e21256ef9"
+        }
+      },
+      {
+        "name": "Bose QuietComfort Bluetooth Headphones, Wireles...",
+        "price": {
+          "$numberInt": "229"
+        },
+        "quantity": {
+          "$numberInt": "1"
+        },
+        "source": "amazon",
+        "lineTotal": {
+          "$numberInt": "229"
+        },
+        "addedToCartAt": {
+          "$date": {
+            "$numberLong": "1743956504512"
+          }
+        },
+        "purchasedAt": {
+          "$date": {
+            "$numberLong": "1743956512702"
+          }
+        },
+        "_id": {
+          "$oid": "67f299d3691cfe1e21256efa"
+        }
+      }
+    ],
+    "cartTotal": {
+      "$numberDouble": "268.99"
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1743956518527"
+      }
+    },
+    "weeklyLimit": {
+      "$numberInt": "100"
+    }
+  }

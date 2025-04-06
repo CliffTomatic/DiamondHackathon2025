@@ -21,7 +21,7 @@ export default function Navbar() {
     <nav className="bg-white dark:bg-slate-950 p-4">
       <div className="container mx-auto flex items-center justify-between">
         {/* Brand */}
-        <div className="text-slate-800 dark:text-green-500 text-3xl font-bold font-sans">
+        <div className="text-green-500 dark:text-green-500 text-5xl font-bold font-mono">
           <Link href="/">Moneta</Link>
         </div>
 
