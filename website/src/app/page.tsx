@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 
-
 // Example component
 export default function HomePage() {
   return (
