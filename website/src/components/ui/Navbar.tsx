@@ -32,7 +32,7 @@ export default function Navbar() {
         <ul className="flex items-center space-x-6">
           <li>
             <Link
-              href="/"
+              href="/dashboard"
               className="text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white"
             >
               Dashboard
