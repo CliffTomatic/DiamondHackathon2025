@@ -22,7 +22,7 @@ Name	Role(s)
 
 ---
 
-##🧰 Tech Stack
+## 🧰 Tech Stack
 
 Languages & Tools Used:
 - JavaScript – 68.7%
