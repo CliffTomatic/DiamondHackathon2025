@@ -134,7 +134,7 @@ function updateCartItems(items) {
                 <span class="item-name">${item.name}</span>
             </div>
             <div class="cart-item-details">
-                <span class="quantity">Qty: ${item.quantity}</span>
+                <span class="quantity">${item.quantity}</span>
                 <span class="item-price">Total: ${formatCurrency(item.lineTotal)}</span>
             </div>
             <div style="font-size: 0.8em; margin-top: 5px;">
