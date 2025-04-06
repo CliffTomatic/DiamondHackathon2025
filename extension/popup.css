@@ -25,6 +25,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    font-family: Arial, sans-serif;
 }
 
 /* Header Section */
@@ -43,7 +44,35 @@ h1 {
     color: var(--primary);
 }
 
-/* Budget Summary Section */
+.budget-input-section {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+#budget-input {
+    flex-grow: 1;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+}
+
+#update-budget {
+    padding: 10px 16px;
+    background: var(--primary);
+    border-radius: 8px;
+    font-size: 0.9em;
+    transition: all 0.2s;
+}
+
+#update-budget:hover {
+    background: #43a047;
+    transform: translateY(-1px);
+}
+
+/* Summary Section */
 .summary-section {
     background: linear-gradient(145deg, #0f172a, #1e293b);
     padding: 16px;
@@ -51,7 +80,9 @@ h1 {
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-#spending-summary, #cart-summary {
+#spending-summary,
+#cart-summary,
+#weekly-limit {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -88,48 +119,36 @@ h1 {
     border-radius: 8px;
     transition: all 0.2s ease;
 }
-
 .cart-item:hover {
     background: rgba(255, 255, 255, 0.08);
     transform: translateY(-2px);
 }
-
 .cart-item-header {
-    display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 8px;
 }
-
 .item-name {
     font-weight: 600;
-    max-width: 70%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     color: var(--success);
+    display: block;
 }
-
 .item-price {
     font-weight: 700;
     color: var(--warning);
 }
-
 .cart-item-details {
     display: flex;
     justify-content: space-between;
     font-size: 0.9em;
     color: #94a3b8;
 }
-
-/* Source Indicator */
 .item-source {
     font-size: 0.8em;
     color: #94a3b8;
     margin-right: 8px;
     display: flex;
     align-items: center;
-    gap: 4px;
 }
 
 /* Input Section */
@@ -155,7 +174,6 @@ input:focus {
     box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.15);
     outline: none;
 }
-
 input:invalid {
     border-color: var(--error);
     box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
@@ -172,12 +190,10 @@ button {
     cursor: pointer;
     transition: all 0.2s ease;
 }
-
 button:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(76, 175, 80, 0.25);
 }
-
 #submit-purchase {
     background: var(--secondary);
     margin-top: 12px;
@@ -185,35 +201,28 @@ button:hover {
 
 /* Animations */
 @keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
-
 .cart-item {
     animation: slideIn 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-/* Scrollbar Styling */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track {
     background: rgba(0,0,0,0.1);
     border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb {
     background: var(--border);
     border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
     background: var(--primary);
+}
+/* Fix quantity display */
+.quantity::before {
+    content: 'Qty: ';
+    opacity: 0.8;
 }
